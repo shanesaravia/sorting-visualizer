@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { bubbleSort } from '../algorithms/bubbleSort';
+import { bubbleSort } from '../helpers/sorters';
 import { Button, Container, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 
 const Sorter = () => {
   const [ windowWidth, setWindowWidth ] = useState(window.innerWidth);
   const [ windowHeight, setWindowHeight ] = useState(window.innerHeight);
-  const barWidth = 5;
+  const barWidth = 10;
   const barMargin = 1;
+  // const barWidth = 30;
+  // const barMargin = 2;
   const contentHeight = windowHeight - 100;
   const maxBars = Math.floor(windowWidth / (barWidth + barMargin) - 10);
 
@@ -55,46 +58,56 @@ const useStyles = makeStyles({
 })
 
 const SorterDisplay = props => {
+  const sorters = { bubbleSort };
   const [ arr, setArr ] = useState([]);
+  const [ disabled, setDisabled ] = useState(false);
   const { 
-    windowWidth,
-    windowHeight,
-    setWindowWidth,
-    setWindowHeight,
-    barWidth,
-    barMargin,
+    // windowWidth,
+    // windowHeight,
+    // setWindowWidth,
+    // setWindowHeight,
+    // barWidth,
+    // barMargin,
     maxBars,
     contentHeight
   } = props;
 
   const classes = useStyles(props);
-  // console.log('test: ', bubbleSort(arr));
-  console.log('windowWidth: ', windowWidth);
-  console.log('windowHeight: ', windowHeight);
 
   useEffect(() => {
     generateRandomArray()
   }, [])
 
   const generateRandomArray = () => {
-      const randomArr = Array.from({length: maxBars}, () => Math.floor(Math.random() * contentHeight));
-      setArr(randomArr);
+    setDisabled(false);
+    const arrayBars = document.getElementsByClassName('array-bar');
+    for (let bar of arrayBars) {bar.style.backgroundColor = 'blue'};
+    const randomArr = Array.from({length: maxBars}, () => Math.floor(Math.random() * contentHeight));
+    setArr(randomArr);
   }
 
-  const randomInt = (min, max) => (
-    Math.floor(Math.random()* (max - min + 1) + min)
-  )
-
+  const sortingMethod = async sortMethod => {
+    await setDisabled(true);
+    const timeouts = sorters[sortMethod](arr);
+    document.getElementById('generate-array')
+    .addEventListener('click', () => {
+      for (let i of timeouts) {
+        clearTimeout(i);
+      }
+    })
+  }
+  
   return (
     <>
       <Container className={classes.arrContainer}>
         <Box className={classes.arrBarWrapper}>
           {arr.map((val, idx) => (
-            <div style={{height: val}} className={classes.arrBar} key={idx}></div>
+            <div style={{height: val}} className={clsx(classes.arrBar, 'array-bar')} key={idx}></div>
           ))}
         </Box>
       </Container>
-      <Button onClick={generateRandomArray}> Generate Data</Button>
+      <Button id='generate-array' onClick={generateRandomArray}>Reset Data</Button>
+      <Button disabled={disabled} onClick={() => sortingMethod('bubbleSort')}>Bubble Sort</Button>
     </>
   )
 }
