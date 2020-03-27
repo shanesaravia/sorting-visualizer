@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { bubbleSort } from '../helpers/sorters';
-import { Button, Container, Box } from '@material-ui/core';
+import { Button, Container, Box, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
+import Menu from './Menu';
 import clsx from 'clsx';
 
-const Sorter = () => {
+const Sorter = props => {
+  const { setSwitchDisabled } = props;
   const [ windowWidth, setWindowWidth ] = useState(window.innerWidth);
   const [ windowHeight, setWindowHeight ] = useState(window.innerHeight);
   const barWidth = 10;
-  const barMargin = 1;
-  // const barWidth = 30;
-  // const barMargin = 2;
+  const barMargin = 1.5;
   const contentHeight = windowHeight - 100;
   const maxBars = Math.floor(windowWidth / (barWidth + barMargin) - 10);
 
@@ -24,11 +25,12 @@ const Sorter = () => {
       barMargin={barMargin}
       maxBars={maxBars}
       contentHeight={contentHeight}
+      setSwitchDisabled={setSwitchDisabled}
     />
   )
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   arrContainer: props => ({
     position: 'relative',
     display: 'flex',
@@ -36,7 +38,6 @@ const useStyles = makeStyles({
     height: props.contentHeight,
     marginTop: 30,
     padding: 0,
-    border: '1px solid red',
   }),
   arrBarWrapper: {
     position: 'absolute',
@@ -44,7 +45,6 @@ const useStyles = makeStyles({
     padding: 0,
     margin: 0,
     whiteSpace: 'nowrap',
-    border: '1px solid green'
   },
   arrBar: props => ({
     display: 'inline-block',
@@ -53,9 +53,17 @@ const useStyles = makeStyles({
     marginRight: props.barMargin / 2,
     padding: 0,
     width: props.barWidth,
-    backgroundColor: 'blue'
-  })
-})
+    backgroundColor: theme.palette.text.primary
+  }),
+  menuButton: {
+    margin: theme.spacing(0, 1),
+    color: theme.palette.common.white,
+    backgroundColor: theme.palette.primary.main,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark
+    }
+  }
+}))
 
 const SorterDisplay = props => {
   const sorters = { bubbleSort };
@@ -69,9 +77,10 @@ const SorterDisplay = props => {
     // barWidth,
     // barMargin,
     maxBars,
-    contentHeight
+    contentHeight,
+    setSwitchDisabled
   } = props;
-
+  const theme = useTheme();
   const classes = useStyles(props);
 
   useEffect(() => {
@@ -80,15 +89,17 @@ const SorterDisplay = props => {
 
   const generateRandomArray = () => {
     setDisabled(false);
+    setSwitchDisabled(false);
     const arrayBars = document.getElementsByClassName('array-bar');
-    for (let bar of arrayBars) {bar.style.backgroundColor = 'blue'};
+    for (let bar of arrayBars) { bar.style.backgroundColor = theme.palette.text.primary };
     const randomArr = Array.from({length: maxBars}, () => Math.floor(Math.random() * contentHeight));
     setArr(randomArr);
   }
 
   const sortingMethod = async sortMethod => {
     await setDisabled(true);
-    const timeouts = sorters[sortMethod](arr);
+    await setSwitchDisabled(true);
+    const timeouts = sorters[sortMethod](arr, theme);
     document.getElementById('generate-array')
     .addEventListener('click', () => {
       for (let i of timeouts) {
@@ -106,8 +117,51 @@ const SorterDisplay = props => {
           ))}
         </Box>
       </Container>
-      <Button id='generate-array' onClick={generateRandomArray}>Reset Data</Button>
-      <Button disabled={disabled} onClick={() => sortingMethod('bubbleSort')}>Bubble Sort</Button>
+      <Menu>
+        <Button id='generate-array' className={classes.menuButton} onClick={generateRandomArray}>Reset Data</Button>
+        <Tooltip title={<span>Time Complexity: O(n²)<br />Space Complexity: O(1)</span>}>
+          <span>
+            <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('bubbleSort')}>
+              Bubble Sort
+            </Button>
+          </span>
+        </Tooltip>
+        {/* <Tooltip title={<span>Time Complexity: O(n²)<br />Space Complexity: O(1)</span>}>
+          <span>
+            <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('selectionSort')}>
+              Selection Sort
+            </Button>
+          </span>
+        </Tooltip> */}
+        {/* <Tooltip title={<span>Time Complexity: O(n²)<br />Space Complexity: O(1)</span>}>
+          <span>
+            <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('insertionSort')}>
+              Insertion Sort
+            </Button>
+          </span>
+        </Tooltip> */}
+        {/* <Tooltip title={<span>Time Complexity: O(n log(n))<br />Space Complexity: O(n)</span>}>
+          <span>
+            <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('mergeSort')}>
+              Merge Sort
+            </Button>
+          </span>
+        </Tooltip> */}
+        {/* <Tooltip title={<span>Time Complexity: O(n log(n))<br />Space Complexity: O(1)</span>}>
+          <span>
+            <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('heapSort')}>
+              Heap Sort
+            </Button>
+          </span>
+        </Tooltip> */}
+        {/* <Tooltip title={<span>Time Complexity: O(n²)<br />Space Complexity: O(log(n))</span>}>
+          <span>
+            <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('quickSort')}>
+              Quick Sort
+            </Button>
+          </span>
+        </Tooltip> */}
+      </Menu>
     </>
   )
 }
