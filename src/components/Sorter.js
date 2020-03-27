@@ -72,8 +72,8 @@ const SorterDisplay = props => {
   const { 
     // windowWidth,
     // windowHeight,
-    // setWindowWidth,
-    // setWindowHeight,
+    setWindowWidth,
+    setWindowHeight,
     // barWidth,
     // barMargin,
     maxBars,
@@ -85,9 +85,11 @@ const SorterDisplay = props => {
 
   useEffect(() => {
     generateRandomArray()
-  }, [])
+  }, [maxBars, contentHeight])
 
   const generateRandomArray = () => {
+    setWindowWidth(window.innerWidth);
+    setWindowHeight(window.innerHeight);
     setDisabled(false);
     setSwitchDisabled(false);
     const arrayBars = document.getElementsByClassName('array-bar');
