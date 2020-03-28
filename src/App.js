@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import Sorter from './components/Sorter';
+import CompleteMessage from './components/CompleteMessage';
 import { CssBaseline, Switch, Typography } from '@material-ui/core';
 import { ThemeProvider, makeStyles, useTheme } from '@material-ui/core/styles';
 import { lightTheme, darkTheme } from './themes';
@@ -46,6 +47,7 @@ function App() {
     <ThemeProvider theme={checked ? darkTheme : lightTheme}>
       <CssBaseline />
       <div className="App">
+        <CompleteMessage />
         <div className={classes.theme}>
           <Switch
             disabled={disabled}

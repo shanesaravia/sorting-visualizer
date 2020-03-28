@@ -1,4 +1,5 @@
 import { getBubbleSortAnimations } from './animations';
+import { animateComplete } from '../components/CompleteMessage';
 
 const animationSpeed = 8;
 
@@ -22,6 +23,10 @@ const bubbleSort = (arr, theme) => {
         barOneStyle.backgroundColor = i + 1 === animations.length ? theme.palette.secondary.dark : theme.palette.text.primary;
         barTwoStyle.backgroundColor = sorted ? theme.palette.secondary.dark : theme.palette.text.primary;
       }, animationSpeed * 2)
+      // Complete Animation
+      if (i === animations.length - 1) {
+        animateComplete();
+      }
     }, i * animationSpeed)
     timeouts.push(animateTimeout);
   }
