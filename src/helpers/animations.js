@@ -9,7 +9,7 @@ const getBubbleSortAnimations = arr => {
 }
 
 const getSelectionSortAnimations = arr => {
-  // Animations: [swapIdx, minIdx, counterIdx, swap, sorted]
+  // Animations: [barOneIdx(min), barTwoIdx(current/iterator), prevMinIdx, swap(swap&complete)]
   const animations = [];
   if (arr.length <= 1) return arr;
   selectionSort(arr, animations)
