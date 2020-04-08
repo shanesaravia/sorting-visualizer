@@ -22,9 +22,40 @@ const bubbleSort = (arr, animations) => {
       animations.push(data);
     }
   }
+  console.log('animations: ', animations);
   return arr;
 };
 
+const selectionSort = (arr, animations) => {
+  // swapidx, min, counter, swap
+  // barOne, barTwo, prevMinIdx, swap
+  let len = arr.length;
+  for (let i = 0; i < len; i++) {
+    let min = i;
+    for (let j = i + 1; j < len; j++) {
+      // let data = [];
+      if (arr[min] > arr[j]) {
+        animations.push([j, j, min, false]);
+        min = j;
+      } else {
+        animations.push([min, j, null, false]);
+      }
+      // data = [i, min, j, false];
+      // console.log('test:', i, min, j);
+    }
+    // console.log('\n\n breakkkk')
+    if (min !== i) {
+      let tmp = arr[i];
+      arr[i] = arr[min];
+      arr[min] = tmp;
+    }
+    animations.push([min, i, null, true])
+  }
+  // console.log('animations: ', animations);
+  return arr;
+}
+
 export {
-  bubbleSort
+  bubbleSort,
+  selectionSort
 }

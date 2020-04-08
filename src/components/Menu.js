@@ -1,8 +1,5 @@
 import React from 'react';
-// import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-// import BubblesIcon from '@material-ui/icons/BubbleChart';
-// import ResetIcon from '@material-ui/icons/RotateLeft';
 
 const useStyles = makeStyles(theme => ({
   menu: {

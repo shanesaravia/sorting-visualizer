@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { bubbleSort } from '../helpers/sorters';
+import { bubbleSort, selectionSort } from '../helpers/sorters';
 import { Button, Container, Box, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTheme } from '@material-ui/core/styles';
@@ -66,7 +66,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const SorterDisplay = props => {
-  const sorters = { bubbleSort };
+  const sorters = { bubbleSort, selectionSort };
   const [ arr, setArr ] = useState([]);
   const [ disabled, setDisabled ] = useState(false);
   const { 
@@ -85,6 +85,7 @@ const SorterDisplay = props => {
 
   useEffect(() => {
     generateRandomArray()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [maxBars, contentHeight])
 
   const generateRandomArray = () => {
@@ -102,12 +103,14 @@ const SorterDisplay = props => {
     await setDisabled(true);
     await setSwitchDisabled(true);
     const timeouts = sorters[sortMethod](arr, theme);
-    document.getElementById('generate-array')
-    .addEventListener('click', () => {
-      for (let i of timeouts) {
-        clearTimeout(i);
-      }
-    })
+    if (timeouts) {
+      document.getElementById('generate-array')
+      .addEventListener('click', () => {
+        for (let i of timeouts) {
+          clearTimeout(i);
+        }
+      })
+    }
   }
   
   return (
@@ -128,13 +131,13 @@ const SorterDisplay = props => {
             </Button>
           </span>
         </Tooltip>
-        {/* <Tooltip title={<span>Time Complexity: O(n²)<br />Space Complexity: O(1)</span>}>
+        <Tooltip title={<span>Time Complexity: O(n²)<br />Space Complexity: O(1)</span>}>
           <span>
             <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('selectionSort')}>
               Selection Sort
             </Button>
           </span>
-        </Tooltip> */}
+        </Tooltip>
         {/* <Tooltip title={<span>Time Complexity: O(n²)<br />Space Complexity: O(1)</span>}>
           <span>
             <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('insertionSort')}>
