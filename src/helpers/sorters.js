@@ -44,7 +44,7 @@ const selectionSort = (arr, theme) => {
     const animateTimeout = setTimeout(() => {
       barOneStyle.backgroundColor = theme.palette.custom.movingBars;
       barTwoStyle.backgroundColor = theme.palette.custom.movingBars;
-      if (prevMinIdx && barOneIdx !== prevMinIdx) {
+      if (prevMinIdx !== null && barOneIdx !== prevMinIdx) {
         arrayBars[prevMinIdx].style.backgroundColor = theme.palette.text.primary;
       }
       if (swap) {
