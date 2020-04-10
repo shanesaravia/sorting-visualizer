@@ -59,7 +59,7 @@ const selectionSort = (arr, theme) => {
       }
       setTimeout(() => {
         barTwoStyle.backgroundColor = swap ? theme.palette.secondary.dark : theme.palette.text.primary;
-      }, animationSpeed * 1)
+      }, animationSpeed)
       // Complete Animation
       if (i === animations.length - 1) {
         animateComplete();
@@ -73,7 +73,30 @@ const selectionSort = (arr, theme) => {
 const insertionSort = (arr, theme) => {
   const animations = getInsertionSortAnimations(arr);
   const arrayBars = document.getElementsByClassName('array-bar');
-  let timeouts = []
+  let timeouts = [];
+  for (let i = 0; i < animations.length; i++) {
+    const [barOneIdx, barTwoIdx, swap, sorted] = animations[i];
+    const barOneStyle = arrayBars[barOneIdx].style;
+    const barTwoStyle = arrayBars[barTwoIdx].style;
+    const animateTimeout = setTimeout(() => {
+      // barOneStyle.backgroundColor = theme.palette.custom.movingBars;
+      barTwoStyle.backgroundColor = theme.palette.custom.movingBars;
+      if (swap) {
+        const temp = barOneStyle.height;
+        barOneStyle.height = barTwoStyle.height;
+        barTwoStyle.height = temp;
+      }
+      barOneStyle.backgroundColor = sorted ? theme.palette.secondary.dark : theme.palette.text.primary;
+      // setTimeout(() => {
+      // }, animationSpeed)
+      // Complete Animation
+      if (i === animations.length - 1) {
+        animateComplete();
+      }
+    }, i * animationSpeed * 2);
+    timeouts.push(animateTimeout);
+  }
+  return timeouts;
 }
 
 export {
