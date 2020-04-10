@@ -1,4 +1,8 @@
-import { getBubbleSortAnimations, getSelectionSortAnimations } from './animations';
+import { 
+  getBubbleSortAnimations,
+  getSelectionSortAnimations,
+  getInsertionSortAnimations
+} from './animations';
 import { animateComplete } from '../components/CompleteMessage';
 
 const animationSpeed = 10;
@@ -66,7 +70,14 @@ const selectionSort = (arr, theme) => {
   return timeouts;
 }
 
+const insertionSort = (arr, theme) => {
+  const animations = getInsertionSortAnimations(arr);
+  const arrayBars = document.getElementsByClassName('array-bar');
+  let timeouts = []
+}
+
 export {
   bubbleSort,
-  selectionSort
+  selectionSort,
+  insertionSort
 }

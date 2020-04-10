@@ -1,4 +1,4 @@
-import { bubbleSort, selectionSort } from './algorithms';
+import { bubbleSort, selectionSort, insertionSort } from './algorithms';
 
 const getBubbleSortAnimations = arr => {
   // Animations: [barOneIdx, barTwoIdx, swap, sorted]
@@ -16,7 +16,16 @@ const getSelectionSortAnimations = arr => {
   return animations;
 }
 
+const getInsertionSortAnimations = arr => {
+  // Animations: []
+  const animations = [];
+  if (arr.length <= 1) return arr;
+  insertionSort(arr, animations)
+  return animations;
+}
+
 export {
   getBubbleSortAnimations,
-  getSelectionSortAnimations
+  getSelectionSortAnimations,
+  getInsertionSortAnimations
 }
