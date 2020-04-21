@@ -1,5 +1,5 @@
 // import { bubbleSort, selectionSort, insertionSort, mergeSort } from './algorithms';
-import { bubbleSort, selectionSort, insertionSort, mergeSort } from './algorithms';
+import { bubbleSort, selectionSort, insertionSort, mergeSort, heapSort } from './algorithms';
 
 const getBubbleSortAnimations = arr => {
   // Animations: [barOneIdx, barTwoIdx, swap, sorted]
@@ -18,7 +18,7 @@ const getSelectionSortAnimations = arr => {
 }
 
 const getInsertionSortAnimations = arr => {
-  // Animations: [barOne, barTwo, swap, sorted]
+  // Animations: [barOneIdx, barTwoIdx, swap, sorted]
   const animations = [];
   if (arr.length <= 1) return arr;
   insertionSort(arr, animations);
@@ -26,20 +26,26 @@ const getInsertionSortAnimations = arr => {
 }
 
 const getMergeSortAnimations = arr => {
-  // Animations: []
+  // Animations: [barOneIdx, barTwoIdx, barTwoHeight, sorted]
   const animations = [];
   if (arr.length <= 1) return arr;
-  // mergeSort(arr, animations);
-  // console.log('animations: ', animations);
   const arrCopy = arr.slice();
   mergeSort(arr, 0, arr.length - 1, arrCopy, animations);
-  // console.log('animations: ', animations)
   return animations
+}
+
+const getHeapSortAnimations = arr => {
+  // Animations: [barOneIdx, barTwoIdx, swap, sorted]
+  const animations = [];
+  if (arr.length <= 1) return arr;
+  heapSort(arr, animations);
+  return animations;
 }
 
 export {
   getBubbleSortAnimations,
   getSelectionSortAnimations,
   getInsertionSortAnimations,
-  getMergeSortAnimations
+  getMergeSortAnimations,
+  getHeapSortAnimations
 }

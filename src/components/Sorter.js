@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { bubbleSort, selectionSort, insertionSort, mergeSort } from '../helpers/visualizations';
+import { bubbleSort, selectionSort, insertionSort, mergeSort, heapSort } from '../helpers/visualizations';
 import { Button, Container, Box, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTheme } from '@material-ui/core/styles';
@@ -66,7 +66,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const SorterDisplay = props => {
-  const sorters = { bubbleSort, selectionSort, insertionSort, mergeSort };
+  const sorters = { bubbleSort, selectionSort, insertionSort, mergeSort, heapSort };
   const [ arr, setArr ] = useState([]);
   const [ disabled, setDisabled ] = useState(false);
   const { 
@@ -152,13 +152,13 @@ const SorterDisplay = props => {
             </Button>
           </span>
         </Tooltip>
-        {/* <Tooltip title={<span>Time Complexity: O(n log(n))<br />Space Complexity: O(1)</span>}>
+        <Tooltip title={<span>Time Complexity: O(n log(n))<br />Space Complexity: O(1)</span>}>
           <span>
             <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('heapSort')}>
               Heap Sort
             </Button>
           </span>
-        </Tooltip> */}
+        </Tooltip>
         {/* <Tooltip title={<span>Time Complexity: O(n²)<br />Space Complexity: O(log(n))</span>}>
           <span>
             <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('quickSort')}>
