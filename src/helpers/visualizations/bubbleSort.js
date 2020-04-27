@@ -19,8 +19,8 @@ const bubbleSort = (arr, theme) => {
         barTwoStyle.height = temp;
       }
       setTimeout(() => {
-        barOneStyle.backgroundColor = i + 1 === animations.length ? theme.palette.secondary.dark : theme.palette.text.primary;
-        barTwoStyle.backgroundColor = sorted ? theme.palette.secondary.dark : theme.palette.text.primary;
+        barOneStyle.backgroundColor = i + 1 === animations.length ? theme.palette.secondary.dark : theme.palette.custom.defaultBars;
+        barTwoStyle.backgroundColor = sorted ? theme.palette.secondary.dark : theme.palette.custom.defaultBars;
       }, configs.animationSpeed * 2)
       // Complete Animation
       if (i === animations.length - 1) {

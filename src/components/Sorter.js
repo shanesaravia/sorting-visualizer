@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { bubbleSort, selectionSort, insertionSort, mergeSort, heapSort } from '../helpers/visualizations';
+import {
+  bubbleSort,
+  selectionSort,
+  insertionSort,
+  mergeSort,
+  heapSort,
+  quickSort
+} from '../helpers/visualizations';
 import { Button, Container, Box, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTheme } from '@material-ui/core/styles';
@@ -53,7 +60,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: props.barMargin / 2,
     padding: 0,
     width: props.barWidth,
-    backgroundColor: theme.palette.text.primary
+    backgroundColor: theme.palette.custom.defaultBars
   }),
   menuButton: {
     margin: theme.spacing(0, 1),
@@ -66,7 +73,14 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const SorterDisplay = props => {
-  const sorters = { bubbleSort, selectionSort, insertionSort, mergeSort, heapSort };
+  const sorters = {
+    bubbleSort,
+    selectionSort,
+    insertionSort,
+    mergeSort,
+    heapSort,
+    quickSort
+  };
   const [ arr, setArr ] = useState([]);
   const [ disabled, setDisabled ] = useState(false);
   const { 
@@ -94,7 +108,7 @@ const SorterDisplay = props => {
     setDisabled(false);
     setSwitchDisabled(false);
     const arrayBars = document.getElementsByClassName('array-bar');
-    for (let bar of arrayBars) { bar.style.backgroundColor = theme.palette.text.primary };
+    for (let bar of arrayBars) { bar.style.backgroundColor = theme.palette.custom.defaultBars };
     const randomArr = Array.from({length: maxBars}, () => Math.floor(Math.random() * contentHeight));
     setArr(randomArr);
   }
@@ -159,13 +173,13 @@ const SorterDisplay = props => {
             </Button>
           </span>
         </Tooltip>
-        {/* <Tooltip title={<span>Time Complexity: O(n²)<br />Space Complexity: O(log(n))</span>}>
+        <Tooltip title={<span>Time Complexity: O(n²)<br />Space Complexity: O(log(n))<br />[Hoare Partitioning Scheme]</span>}>
           <span>
             <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('quickSort')}>
               Quick Sort
             </Button>
           </span>
-        </Tooltip> */}
+        </Tooltip>
       </Menu>
     </>
   )

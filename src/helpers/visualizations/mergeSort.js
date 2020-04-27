@@ -23,10 +23,10 @@ const mergeSort = (arr, theme) => {
       setTimeout(() => {
         if (animations[i+1]) {
           if (animations[i+1][0] !== barOneIdx) {
-            barOneStyle.backgroundColor = sorted ? theme.palette.secondary.dark : theme.palette.text.primary;
+            barOneStyle.backgroundColor = sorted ? theme.palette.secondary.dark : theme.palette.custom.defaultBars;
           }
           if (barTwoStyle && animations[i+1][1] !== barTwoIdx) {
-            barTwoStyle.backgroundColor = theme.palette.text.primary;
+            barTwoStyle.backgroundColor = theme.palette.custom.defaultBars;
           }
         }
       }, configs.animationSpeed * 8)

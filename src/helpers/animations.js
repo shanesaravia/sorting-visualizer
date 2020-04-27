@@ -1,5 +1,12 @@
 // import { bubbleSort, selectionSort, insertionSort, mergeSort } from './algorithms';
-import { bubbleSort, selectionSort, insertionSort, mergeSort, heapSort } from './algorithms';
+import {
+  bubbleSort,
+  selectionSort,
+  insertionSort,
+  mergeSort,
+  heapSort,
+  quickSort
+} from './algorithms';
 
 const getBubbleSortAnimations = arr => {
   // Animations: [barOneIdx, barTwoIdx, swap, sorted]
@@ -42,10 +49,20 @@ const getHeapSortAnimations = arr => {
   return animations;
 }
 
+const getQuickSortAnimations = arr => {
+  // Anmations: [barOneIdx, barTwoIdx, swap, pivotIdx, removePivot, sorted]
+  const animations = [];
+  if (arr.length <= 1) return arr;
+  const finalSort = quickSort(arr, 0, arr.length - 1, animations);
+  // console.log('animations: ', animations);
+  return { animations, finalSort };
+}
+
 export {
   getBubbleSortAnimations,
   getSelectionSortAnimations,
   getInsertionSortAnimations,
   getMergeSortAnimations,
-  getHeapSortAnimations
+  getHeapSortAnimations,
+  getQuickSortAnimations
 }

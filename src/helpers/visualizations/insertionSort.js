@@ -17,7 +17,7 @@ const insertionSort = (arr, theme) => {
         barOneStyle.height = barTwoStyle.height;
         barTwoStyle.height = temp;
       }
-      barOneStyle.backgroundColor = sorted ? theme.palette.secondary.dark : theme.palette.text.primary;
+      barOneStyle.backgroundColor = sorted ? theme.palette.secondary.dark : theme.palette.custom.defaultBars;
       if (i === animations.length - 1) {
         animateComplete();
       }

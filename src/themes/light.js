@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { cyan, lime, red } from '@material-ui/core/colors';
+import { cyan, lime, red, grey, yellow } from '@material-ui/core/colors';
 
   const lightTheme = createMuiTheme({
     palette: {
@@ -7,7 +7,8 @@ import { cyan, lime, red } from '@material-ui/core/colors';
       primary: cyan,
       secondary: lime,
       custom: {
-        movingBars: red[500],
+        defaultBars: grey[800],
+        movingBars: red[500]
       }
     }
   });

@@ -20,15 +20,15 @@ const heapSort = (arr, theme) => {
       }
 
       setTimeout(() => {
-        barOneStyle.backgroundColor = theme.palette.text.primary;
+        barOneStyle.backgroundColor = theme.palette.custom.defaultBars;
         if (!animations[i + 1] || animations[i + 1][0] !== barTwoIdx) {
-          barTwoStyle.backgroundColor = sorted ? theme.palette.secondary.dark : theme.palette.text.primary;
+          barTwoStyle.backgroundColor = sorted ? theme.palette.secondary.dark : theme.palette.custom.defaultBars;
         }
-      }, configs.animationSpeed * 8)
+      }, configs.animationSpeed * 12)
       if (i === animations.length - 1) {
         animateComplete();
       }
-    }, i * configs.animationSpeed * 8);
+    }, i * configs.animationSpeed * 12);
     timeouts.push(animateTimeout);
   }
   return timeouts;
