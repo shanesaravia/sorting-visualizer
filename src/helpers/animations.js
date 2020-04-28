@@ -54,7 +54,6 @@ const getQuickSortAnimations = arr => {
   const animations = [];
   if (arr.length <= 1) return arr;
   const finalSort = quickSort(arr, 0, arr.length - 1, animations);
-  // console.log('animations: ', animations);
   return { animations, finalSort };
 }
 

@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { cyan, lime, red, grey, yellow } from '@material-ui/core/colors';
+import { cyan, lime, red, grey } from '@material-ui/core/colors';
 
   const lightTheme = createMuiTheme({
     palette: {

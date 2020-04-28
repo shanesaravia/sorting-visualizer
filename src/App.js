@@ -3,7 +3,7 @@ import './App.css';
 import Sorter from './components/Sorter';
 import CompleteMessage from './components/CompleteMessage';
 import { CssBaseline, Switch, Typography } from '@material-ui/core';
-import { ThemeProvider, makeStyles, useTheme } from '@material-ui/core/styles';
+import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
 import { lightTheme, darkTheme } from './themes';
 
 const useStyles = makeStyles(theme => ({
@@ -23,7 +23,6 @@ function App() {
   const [checked, setChecked] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const classes = useStyles();
-  const theme = useTheme();
   
   useEffect(() => {    
     const userTheme = localStorage.getItem('theme') || 'dark';
@@ -39,7 +38,7 @@ function App() {
     // Set bars to correct color
     const arrayBars = document.getElementsByClassName('array-bar');
     for (let bar of arrayBars) { 
-      bar.style.backgroundColor = val ? theme.palette.common.white : theme.palette.common.black;
+      bar.style.backgroundColor = val ? darkTheme.palette.custom.defaultBars : lightTheme.palette.custom.defaultBars;
     };
   }
 

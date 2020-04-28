@@ -19,7 +19,7 @@ const Sorter = props => {
   const [ windowHeight, setWindowHeight ] = useState(window.innerHeight);
   const barWidth = 10;
   const barMargin = 1.5;
-  const contentHeight = windowHeight - 100;
+  const contentHeight = windowHeight - 120;
   const maxBars = Math.floor(windowWidth / (barWidth + barMargin) - 10);
 
   return (
@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     height: props.contentHeight,
-    marginTop: 30,
+    marginTop: 50,
     padding: 0,
   }),
   arrBarWrapper: {
@@ -68,6 +68,22 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.primary.main,
     '&:hover': {
       backgroundColor: theme.palette.primary.dark
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 12
+    },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 10,
+      padding: 2
+    }
+  },
+  resetButton: {
+    backgroundColor: theme.palette.common.white,
+    color: theme.palette.primary.main,
+    fontWeight: 900,
+    '&:hover': {
+      // color: theme.palette.common.white
+      backgroundColor: '#D0D0D0'
     }
   }
 }))
@@ -137,7 +153,7 @@ const SorterDisplay = props => {
         </Box>
       </Container>
       <Menu>
-        <Button id='generate-array' className={classes.menuButton} onClick={generateRandomArray}>Reset Data</Button>
+        <Button id='generate-array' className={clsx(classes.menuButton, classes.resetButton)} onClick={generateRandomArray}>Reset Data</Button>
         <Tooltip title={<span>Time Complexity: O(n²)<br />Space Complexity: O(1)</span>}>
           <span>
             <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('bubbleSort')}>

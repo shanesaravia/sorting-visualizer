@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { cyan, lime, red, yellow } from '@material-ui/core/colors';
+import { cyan, lime, red } from '@material-ui/core/colors';
 
   const darkTheme = createMuiTheme({
     palette: {
