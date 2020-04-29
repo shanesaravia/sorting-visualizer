@@ -6,6 +6,7 @@ const quickSort = (arr, theme) => {
   const { animations, finalSort } = getQuickSortAnimations(arr);
   const arrayBars = document.getElementsByClassName('array-bar');
   let timeouts = [];
+  let sorted = {};
   let swappedPivotIdx;
   for (let i = 0; i < animations.length; i++) {
     let [barOneIdx, barTwoIdx, swap, pivotIdx, removePivot, pivot] = animations[i];
@@ -41,23 +42,36 @@ const quickSort = (arr, theme) => {
           if (animations[i + 1][0] !== barOneIdx) {
             if (barOneIdx === pivotIdx) {
               barOneStyle.backgroundColor = theme.palette.primary.dark;
-            } else if (finalSort[barOneIdx] === parseInt(barOneStyle.height)) {
+            } else if (finalSort[barOneIdx] === parseInt(barOneStyle.height) &&
+                        Math.abs(barOneIdx - barTwoIdx) < 5 &&
+                        Math.abs(barOneIdx - pivotIdx) < 5) {
+              barOneStyle.backgroundColor = theme.palette.secondary.dark;
+              sorted[barOneIdx] = true;
+            } else if (finalSort[barOneIdx] === parseInt(barOneStyle.height) &&
+                        sorted[barOneIdx]) {
               barOneStyle.backgroundColor = theme.palette.secondary.dark;
             } else {
-              barOneStyle.backgroundColor = theme.palette.custom.defaultBars;
+            barOneStyle.backgroundColor = theme.palette.custom.defaultBars;
             }
           }
           if (animations[i + 1][1] !== barTwoIdx) {
             if (barTwoIdx === pivotIdx) {
               barTwoStyle.backgroundColor = theme.palette.primary.dark;
-            } else if (finalSort[barTwoIdx] === parseInt(barTwoStyle.height)) {
+            } else if (finalSort[barTwoIdx] === parseInt(barTwoStyle.height) &&
+                        Math.abs(barOneIdx - barTwoIdx) < 5 &&
+                        Math.abs(barTwoIdx - pivotIdx) < 5) {
+                barTwoStyle.backgroundColor = theme.palette.secondary.dark;
+                sorted[barTwoIdx] = true;
+            } else if (finalSort[barTwoIdx] === parseInt(barTwoStyle.height) &&
+                        sorted[barTwoIdx]) {
               barTwoStyle.backgroundColor = theme.palette.secondary.dark;
             } else {
               barTwoStyle.backgroundColor = theme.palette.custom.defaultBars;
             }
           }
           if (removePivot) {
-            if (finalSort[pivotIdx] === parseInt(pivotStyle.height)) {
+            if (Math.abs(barOneIdx - barTwoIdx) < 3 && finalSort[pivotIdx] === parseInt(pivotStyle.height)) {
+              sorted[pivotIdx] = true;
               pivotStyle.backgroundColor = theme.palette.secondary.dark;
             } else {
               pivotStyle.backgroundColor = theme.palette.custom.defaultBars;
@@ -68,11 +82,11 @@ const quickSort = (arr, theme) => {
           barTwoStyle.backgroundColor = theme.palette.secondary.dark;
           pivotStyle.backgroundColor = theme.palette.secondary.dark;
         }
-      }, configs.animationSpeed * 8)
+      }, configs.animationSpeed * 2)
       if (i === animations.length - 1) {
         animateComplete();
       }
-    }, i * configs.animationSpeed * 8);
+    }, i * configs.animationSpeed * 2);
     timeouts.push(animateTimeout);
   }
   return timeouts;
