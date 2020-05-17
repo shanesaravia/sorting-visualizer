@@ -78,6 +78,11 @@ const useStyles = makeStyles(theme => ({
       padding: 2
     }
   },
+  btnText: {
+    [theme.breakpoints.down('xs')]: {
+      padding: '0 10px'
+    }
+  },
   resetButton: {
     backgroundColor: theme.palette.common.white,
     color: theme.palette.primary.main,
@@ -159,42 +164,42 @@ const SorterDisplay = props => {
         <Tooltip title={<span>Time Complexity: O(n²)<br />Space Complexity: O(1)</span>}>
           <span>
             <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('bubbleSort')}>
-              Bubble Sort
+              <span class={classes.btnText}>Bubble Sort</span>
             </Button>
           </span>
         </Tooltip>
         <Tooltip title={<span>Time Complexity: O(n²)<br />Space Complexity: O(1)</span>}>
           <span>
             <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('selectionSort')}>
-              Selection Sort
+              <span class={classes.btnText}>Selection Sort</span>
             </Button>
           </span>
         </Tooltip>
         <Tooltip title={<span>Time Complexity: O(n²)<br />Space Complexity: O(1)</span>}>
           <span>
             <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('insertionSort')}>
-              Insertion Sort
+              <span class={classes.btnText}>Insertion Sort</span>
             </Button>
           </span>
         </Tooltip>
         <Tooltip title={<span>Time Complexity: O(n log(n))<br />Space Complexity: O(n)</span>}>
           <span>
             <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('mergeSort')}>
-              Merge Sort
+              <span class={classes.btnText}>Merge Sort</span>
             </Button>
           </span>
         </Tooltip>
         <Tooltip title={<span>Time Complexity: O(n log(n))<br />Space Complexity: O(1)</span>}>
           <span>
             <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('heapSort')}>
-              Heap Sort
+              <span class={classes.btnText}>Heap Sort</span>
             </Button>
           </span>
         </Tooltip>
         <Tooltip title={<span>Time Complexity: O(n²)<br />Space Complexity: O(log(n))<br />[Hoare Partitioning Scheme]</span>}>
           <span>
             <Button className={classes.menuButton} disabled={disabled} onClick={() => sortingMethod('quickSort')}>
-              Quick Sort
+              <span class={classes.btnText}>Quick Sort</span>
             </Button>
           </span>
         </Tooltip>
