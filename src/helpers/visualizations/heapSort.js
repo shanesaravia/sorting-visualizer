@@ -1,8 +1,13 @@
-import configs from '../../configs';
 import { getHeapSortAnimations } from '../animations';
 import { animateComplete } from '../../components/CompleteMessage';
 
-const heapSort = (arr, theme) => {
+const mapSpeed = {
+  slow: 300,
+  normal: 100,
+  fast: 10
+}
+
+const heapSort = (arr, theme, speed) => {
   const animations = getHeapSortAnimations(arr);
   const arrayBars = document.getElementsByClassName('array-bar');
   let timeouts = [];
@@ -19,16 +24,17 @@ const heapSort = (arr, theme) => {
         barTwoStyle.height = temp;
       }
 
-      setTimeout(() => {
+      const animateTimeout2 = setTimeout(() => {
         barOneStyle.backgroundColor = theme.palette.custom.defaultBars;
         if (!animations[i + 1] || animations[i + 1][0] !== barTwoIdx) {
           barTwoStyle.backgroundColor = sorted ? theme.palette.secondary.dark : theme.palette.custom.defaultBars;
         }
-      }, configs.animationSpeed * 12)
+      }, mapSpeed[speed || 'normal'])
+      timeouts.push(animateTimeout2);
       if (i === animations.length - 1) {
         animateComplete();
       }
-    }, i * configs.animationSpeed * 12);
+    }, i * mapSpeed[speed || 'normal']);
     timeouts.push(animateTimeout);
   }
   return timeouts;

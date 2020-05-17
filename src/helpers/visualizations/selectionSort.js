@@ -1,8 +1,13 @@
-import configs from '../../configs';
 import { getSelectionSortAnimations } from '../animations';
 import { animateComplete } from '../../components/CompleteMessage';
 
-const selectionSort = (arr, theme) => {
+const mapSpeed = {
+  slow: 100,
+  normal: 12,
+  fast: 2
+}
+
+const selectionSort = (arr, theme, speed) => {
   const animations = getSelectionSortAnimations(arr);
   const arrayBars = document.getElementsByClassName('array-bar');
   let timeouts = [];
@@ -14,22 +19,29 @@ const selectionSort = (arr, theme) => {
       barOneStyle.backgroundColor = theme.palette.custom.movingBars;
       barTwoStyle.backgroundColor = theme.palette.custom.movingBars;
       if (prevMinIdx !== null && barOneIdx !== prevMinIdx) {
-        arrayBars[prevMinIdx].style.backgroundColor = theme.palette.text.primary;
+        arrayBars[prevMinIdx].style.backgroundColor = theme.palette.custom.defaultBars;
+      } else if(prevMinIdx !== null) {
+        arrayBars[prevMinIdx].style.backgroundColor = theme.palette.custom.movingBars;
       }
       if (swap) {
         const temp = barOneStyle.height;
         barOneStyle.height = barTwoStyle.height;
         barTwoStyle.height = temp;
-        barOneStyle.backgroundColor = theme.palette.text.primary;
+        barOneStyle.backgroundColor = theme.palette.custom.defaultBars;
       }
-      setTimeout(() => {
-        barTwoStyle.backgroundColor = swap ? theme.palette.secondary.dark : theme.palette.text.primary;
-      }, configs.animationSpeed)
+      const animateTimeout2 = setTimeout(() => {
+        if (swap) {
+          barTwoStyle.backgroundColor = theme.palette.secondary.dark;
+        } else if (barOneIdx !== barTwoIdx) {
+          barTwoStyle.backgroundColor = theme.palette.custom.defaultBars;
+        }
+      }, mapSpeed[speed || 'normal'])
+      timeouts.push(animateTimeout2);
       // Complete Animation
       if (i === animations.length - 1) {
         animateComplete();
       }
-    }, i * configs.animationSpeed);
+    }, i * mapSpeed[speed || 'normal']);
     timeouts.push(animateTimeout);
   }
   return timeouts;

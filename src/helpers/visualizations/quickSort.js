@@ -1,8 +1,13 @@
-import configs from '../../configs';
 import { getQuickSortAnimations } from '../animations';
 import { animateComplete } from '../../components/CompleteMessage';
 
-const quickSort = (arr, theme) => {
+const mapSpeed = {
+  slow: 400,
+  normal: 40,
+  fast: 6
+}
+
+const quickSort = (arr, theme, speed) => {
   const { animations, finalSort } = getQuickSortAnimations(arr);
   const arrayBars = document.getElementsByClassName('array-bar');
   let timeouts = [];
@@ -13,6 +18,7 @@ const quickSort = (arr, theme) => {
     const barOneStyle = arrayBars[barOneIdx].style;
     const barTwoStyle = arrayBars[barTwoIdx].style;
     let pivotStyle = arrayBars[pivotIdx].style;
+    // eslint-disable-next-line no-loop-func
     const animateTimeout = setTimeout(() => {
       barOneStyle.backgroundColor = theme.palette.custom.movingBars;
       barTwoStyle.backgroundColor = theme.palette.custom.movingBars;
@@ -37,7 +43,7 @@ const quickSort = (arr, theme) => {
         pivotStyle.backgroundColor = theme.palette.primary.dark
       }
       
-      setTimeout(() => {
+      const animateTimeout2 = setTimeout(() => {
         if (animations[i + 1]) {
           if (animations[i + 1][0] !== barOneIdx) {
             if (barOneIdx === pivotIdx) {
@@ -82,11 +88,12 @@ const quickSort = (arr, theme) => {
           barTwoStyle.backgroundColor = theme.palette.secondary.dark;
           pivotStyle.backgroundColor = theme.palette.secondary.dark;
         }
-      }, configs.animationSpeed * 2)
+      }, mapSpeed[speed || 'normal'])
+      timeouts.push(animateTimeout2);
       if (i === animations.length - 1) {
         animateComplete();
       }
-    }, i * configs.animationSpeed * 2);
+    }, i * mapSpeed[speed || 'normal']);
     timeouts.push(animateTimeout);
   }
   return timeouts;
