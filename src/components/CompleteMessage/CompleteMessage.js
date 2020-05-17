@@ -7,6 +7,7 @@ import anime from 'animejs/lib/anime.es.js';
 const animateComplete = () => {
   // Wrap every letter in a span
   var textWrapper = document.querySelector('.ml11 .letters');
+  // eslint-disable-next-line no-control-regex
   textWrapper.innerHTML = textWrapper.textContent.replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>");
   document.querySelector('.ml11').style.opacity = 1;
 

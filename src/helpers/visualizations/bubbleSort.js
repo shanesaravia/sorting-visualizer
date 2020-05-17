@@ -1,8 +1,13 @@
-import configs from '../../configs';
 import { getBubbleSortAnimations } from '../animations';
 import { animateComplete } from '../../components/CompleteMessage';
 
-const bubbleSort = (arr, theme) => {
+const mapSpeed = {
+  slow: 150,
+  normal: 16,
+  fast: 2
+}
+
+const bubbleSort = (arr, theme, speed) => {
   const animations = getBubbleSortAnimations(arr);
   const arrayBars = document.getElementsByClassName('array-bar');
   let timeouts = []
@@ -18,15 +23,16 @@ const bubbleSort = (arr, theme) => {
         barOneStyle.height = barTwoStyle.height;
         barTwoStyle.height = temp;
       }
-      setTimeout(() => {
+      const animateTimeout2 = setTimeout(() => {
         barOneStyle.backgroundColor = i + 1 === animations.length ? theme.palette.secondary.dark : theme.palette.custom.defaultBars;
         barTwoStyle.backgroundColor = sorted ? theme.palette.secondary.dark : theme.palette.custom.defaultBars;
-      }, configs.animationSpeed * 2)
+      }, 2 * mapSpeed[speed || 'normal'])
+      timeouts.push(animateTimeout2);
       // Complete Animation
       if (i === animations.length - 1) {
         animateComplete();
       }
-    }, i * configs.animationSpeed)
+    }, i * mapSpeed[speed || 'normal'])
     timeouts.push(animateTimeout);
   }
   return timeouts;

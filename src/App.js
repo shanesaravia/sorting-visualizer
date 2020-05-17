@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import Sorter from './components/Sorter';
+import Speedbar from './components/Speedbar';
 import CompleteMessage from './components/CompleteMessage';
 import { CssBaseline, Switch, Typography } from '@material-ui/core';
 import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
@@ -16,12 +17,19 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'row',
     alignItems: 'center',
     color: theme.palette.text.primary
+  },
+  speedbar: {
+    position: 'absolute',
+    top: 10,
+    right: 30,
+    zIndex: 9999
   }
 }))
 
 function App() {
   const [checked, setChecked] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [speed, setSpeed] = useState();
   const classes = useStyles();
   
   useEffect(() => {    
@@ -58,7 +66,10 @@ function App() {
           />
           <Typography color='textPrimary'>Dark Mode</Typography>
         </div>
-        <Sorter setSwitchDisabled={setDisabled} />
+        <div className={classes.speedbar}>
+          <Speedbar disabled={disabled} setSpeed={setSpeed} />
+        </div>
+        <Sorter setSwitchDisabled={setDisabled} speed={speed} />
       </div>
     </ThemeProvider>
   );

@@ -14,12 +14,12 @@ import Menu from './Menu';
 import clsx from 'clsx';
 
 const Sorter = props => {
-  const { setSwitchDisabled } = props;
+  const { setSwitchDisabled, speed } = props;
   const [ windowWidth, setWindowWidth ] = useState(window.innerWidth);
   const [ windowHeight, setWindowHeight ] = useState(window.innerHeight);
   const barWidth = 10;
   const barMargin = 1.5;
-  const contentHeight = windowHeight - 120;
+  const contentHeight = windowHeight - 140;
   const maxBars = Math.floor(windowWidth / (barWidth + barMargin) - 10);
 
   return (
@@ -33,6 +33,7 @@ const Sorter = props => {
       maxBars={maxBars}
       contentHeight={contentHeight}
       setSwitchDisabled={setSwitchDisabled}
+      speed={speed}
     />
   )
 }
@@ -43,7 +44,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     height: props.contentHeight,
-    marginTop: 50,
+    marginTop: 70,
     padding: 0,
   }),
   arrBarWrapper: {
@@ -108,7 +109,8 @@ const SorterDisplay = props => {
     // barMargin,
     maxBars,
     contentHeight,
-    setSwitchDisabled
+    setSwitchDisabled,
+    speed
   } = props;
   const theme = useTheme();
   const classes = useStyles(props);
@@ -128,11 +130,11 @@ const SorterDisplay = props => {
     const randomArr = Array.from({length: maxBars}, () => Math.floor(Math.random() * contentHeight));
     setArr(randomArr);
   }
-
+  
   const sortingMethod = async sortMethod => {
     await setDisabled(true);
     await setSwitchDisabled(true);
-    const timeouts = sorters[sortMethod](arr, theme);
+    const timeouts = sorters[sortMethod](arr, theme, speed);
     if (timeouts) {
       document.getElementById('generate-array')
       .addEventListener('click', () => {

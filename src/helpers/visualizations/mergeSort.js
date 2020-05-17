@@ -1,8 +1,13 @@
-import configs from '../../configs';
 import { getMergeSortAnimations } from '../animations';
 import { animateComplete } from '../../components/CompleteMessage';
 
-const mergeSort = (arr, theme) => {
+const mapSpeed = {
+  slow: 400,
+  normal: 48,
+  fast: 8
+}
+
+const mergeSort = (arr, theme, speed) => {
   const animations = getMergeSortAnimations(arr);
   const arrayBars = document.getElementsByClassName('array-bar');
   let timeouts = [];
@@ -20,20 +25,22 @@ const mergeSort = (arr, theme) => {
           barTwoStyle.backgroundColor = theme.palette.custom.movingBars;
         }
       }
-      setTimeout(() => {
+
+      const animateTimeout2 = setTimeout(() => {
         if (animations[i+1]) {
           if (animations[i+1][0] !== barOneIdx) {
             barOneStyle.backgroundColor = sorted ? theme.palette.secondary.dark : theme.palette.custom.defaultBars;
           }
-          if (barTwoStyle && animations[i+1][1] !== barTwoIdx) {
+          if (barTwoStyle && animations[i+1][1] !== barTwoIdx && barTwoIdx !== barOneIdx) {
             barTwoStyle.backgroundColor = theme.palette.custom.defaultBars;
           }
         }
-      }, configs.animationSpeed * 8)
+      }, mapSpeed[speed || 'normal'])
+      timeouts.push(animateTimeout2);
       if (i === animations.length - 1) {
         animateComplete();
       }
-    }, i * configs.animationSpeed * 8);
+    }, i * mapSpeed[speed || 'normal']);
     timeouts.push(animateTimeout);
   }
   return timeouts;
